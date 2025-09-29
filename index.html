@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home</title>
+<link rel="stylesheet" href="/bootstrap-5.3.8-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+
+<!-- fav-icons -->
+<link rel="icon" href="/assets/favicon.ico/favicon.ico" type="image/x-icon">
+<style>
+body { 
+  background-image: url(/assets/image/old-books-arrangement-with-light.jpg); 
+  background-size: cover; 
+  margin:0; 
+  font-family: Arial,sans-serif; 
+}
+
+.app-container { 
+  max-width:480px; 
+  margin:auto; 
+  padding:1rem; 
+  padding-bottom:80px; 
+  text-align:center; 
+}
+
+/* Animations */
+.app-container h2, 
+.app-container img,
+.app-container h1, 
+.app-container p,
+#getStartedBtn {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* Fade-in for all except button */
+.app-container h2 { animation: fadeIn 1s ease forwards; animation-delay: 0.3s; }
+.app-container img { animation: fadeIn 1s ease forwards; animation-delay: 0.8s; }
+.app-container h1 { animation: fadeIn 1.2s ease forwards; animation-delay: 1.3s; }
+.app-container p { animation: fadeIn 1.2s ease forwards; animation-delay: 1.8s; }
+
+/* Spotlight entrance for button */
+#getStartedBtn { 
+  animation: spotlight 1s ease forwards; 
+  animation-delay: 2.3s; 
+}
+
+/* Soft glowing pulse (after spotlight entrance) */
+@keyframes softGlow {
+  0% { box-shadow: 0 0 8px rgba(255,69,0,0.6), 0 0 15px rgba(255,140,0,0.4); }
+  50% { box-shadow: 0 0 15px rgba(255,140,0,0.8), 0 0 30px rgba(255,215,0,0.6); }
+  100% { box-shadow: 0 0 8px rgba(255,69,0,0.6), 0 0 15px rgba(255,140,0,0.4); }
+}
+
+/* When spotlight ends, add soft glow */
+#startGlow {
+  animation: softGlow 2s infinite alternate;
+}
+
+/* Stop glow on hover */
+#startGlow:hover {
+  animation: none !important;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spotlight {
+  from {
+    opacity: 0;
+    transform: scale(0.8) rotate(-10deg);
+    filter: brightness(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    filter: brightness(1);
+  }
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  background: rgba(0,0,0,0.6);
+}
+</style>
+</head>
+<body>
+
+<div class="app-container mt-3 rounded-4 p-4 text-white mt-5">
+  <img src="/assets/image/pexels-george-milton-7034774-removebg-preview.png" 
+       class="img-fluid d-block mx-auto" style="max-width:50px;">
+  <h1 class="text-primary fw-bolder mt-3">Unlock the Power of Words</h1>
+  <p class="fs-5 mt-3 text-white">
+    Explore a vast collection of definitions, synonyms, and examples to enhance your vocabulary and communication.
+  </p>
+  <button class="btn w-50 d-block mx-auto mt-5 text-white rounded-4" 
+          style="background-color: orangered;" id="getStartedBtn">
+    Get Started
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary"><i class="bi bi-info-circle"></i> Welcome</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Welcome to <b>My Dictionary</b>!  
+          Here you can search for words, discover meanings, synonyms, and keep track of your search history.  
+          Let’s begin your journey of learning new words!
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="goBtn">GO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Bootstrap modal
+const getStartedBtn = document.getElementById("getStartedBtn");
+const infoModal = new bootstrap.Modal(document.getElementById("infoModal"));
+
+// After spotlight entrance, add glow class
+getStartedBtn.addEventListener("animationend", (e)=>{
+  if(e.animationName === "spotlight"){
+    getStartedBtn.id = "startGlow"; // switch to glowing mode
+  }
+});
+
+// Show modal on click
+getStartedBtn.addEventListener("click", ()=>{
+  infoModal.show();
+});
+
+// Go button inside modal → redirect
+document.getElementById("goBtn").addEventListener("click", ()=>{
+  window.location.href="pages/search.html";
+});
+</script>
+</body>
+</html>
